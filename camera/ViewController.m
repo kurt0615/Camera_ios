@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "CollectionViewCell.h"
 #import "ScaleableImageView.h"
+#import "ScaleableIVToolbar.h"
+#import "AlertView.h"
 
 @interface ViewController ()<UIScrollViewDelegate>
 @property (strong, nonatomic)UIImagePickerController *picker;
@@ -21,11 +23,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *imageContainer;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) ScaleableImageView *scaleableImageView;
-@property (strong, nonatomic) UIBarButtonItem *confirmBarButtonItem;
 @property (strong, nonatomic) UIScrollView *scaleableImageViewScrollView;
 @property (strong, nonatomic) UIView *scaleableContainer;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
-@property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) ScaleableIVToolbar *toolbar;
+@property (strong, nonatomic) AlertView *alertView;
+@property (strong, nonatomic) NSMutableDictionary *tempPhotoInfo;
 @end
 
 @implementation ViewController
@@ -37,15 +40,8 @@
 
 //overlayout use
 - (IBAction)cancel:(id)sender {
+    self.tempPhotoInfo = nil;
     [self.picker dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)cancelScaleableImageView {
-    [self.scaleableContainer removeFromSuperview];
-    self.scaleableImageView = nil;
-    self.toolbar = nil;
-    self.scaleableImageViewScrollView = nil;
-    self.scaleableContainer = nil;
 }
 
 - (void)hideScaleableImageViewToolbar {
@@ -187,15 +183,14 @@
    
     
     [self presentViewController:self.picker animated:YES completion:NULL];
-    
 }
+
+
 - (IBAction)selectPthoto:(id)sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     //picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-   
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
@@ -210,20 +205,10 @@
         }
     }
     
-    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];//UIImagePickerControllerEditedImage
-    
-//    UIGraphicsBeginImageContext(destinationSize);
-//    [chosenImage drawInRect:CGRectMake(0,0,destinationSize.width,destinationSize.height)];
-//    self.image.image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-   
-    
+    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     UIImageView *img = [[UIImageView alloc]init];
     [img setFrame:CGRectMake(0,0,80.f,80.f)];
     img.image = chosenImage;
-    
-
-    
     
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
     CFStringRef stringUUID = CFUUIDCreateString(NULL, theUUID);
@@ -231,21 +216,26 @@
     CFRelease(theUUID);
     [self savaImage:chosenImage Withfilename:[NSString stringWithFormat:@"%@",fileName]];
     
-    
     NSDictionary *imgInfo = @{
                               @"fileName":fileName,
                               @"image":img
                               };
     
-    
-    [self.dataSource addObject:imgInfo];
-
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    if (self.tempPhotoInfo) {
+        NSInteger replaceIndex = [self.dataSource indexOfObject:self.tempPhotoInfo];
+        [self.dataSource removeObject:self.tempPhotoInfo];
+        [self.dataSource insertObject:imgInfo atIndex:replaceIndex];
+        [self confirmBarItemAct];
+        self.tempPhotoInfo = nil;
+    }else{
+        [self.dataSource addObject:imgInfo];
+    }
     [self.imageContainer reloadData];
-    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    self.tempPhotoInfo = nil;
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -302,13 +292,15 @@
         
         [collectionViewCell.contentView addSubview:[imgInfo valueForKey:@"image"]];
         
+        __weak ViewController *weakViewController = self;
         __weak CollectionViewCell *weakCollectionViewCell = collectionViewCell;
+        
         collectionViewCell.act = ^{
             
             [self.scaleableImageView setUserInteractionEnabled:YES];
             [self.scaleableImageView setContentMode:UIViewContentModeScaleAspectFit];
             self.scaleableImageView.image = ((UIImageView*)[imgInfo valueForKey:@"image"]).image;
-            [self.scaleableImageView  setFrame:weakCollectionViewCell.frame];
+            [self.scaleableImageView setFrame:weakCollectionViewCell.frame];
             
             [self.scaleableImageViewScrollView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
             [self.scaleableImageViewScrollView setBackgroundColor:[UIColor clearColor]];
@@ -320,11 +312,20 @@
             //self.scaleableImageViewScrollView.bounces = NO;
             [self.scaleableImageViewScrollView addSubview:self.scaleableImageView];
 
-            UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-            NSArray *items = [NSArray arrayWithObjects:flexiableItem, self.confirmBarButtonItem, nil];
-            self.toolbar.frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
-            self.toolbar.items = items;
+           
+            self.toolbar.confirmBarButtonItemAct = ^{
+                [weakViewController confirmBarItemAct];
+            };
             
+            self.toolbar.deleteBarButtonItemAct = ^{
+                [weakViewController deleteWithFileName:[imgInfo valueForKey:@"fileName"]];
+            };
+            
+            self.toolbar.takephotoBarButtonItemAct = ^{
+                [weakViewController reTakePhotoWithFileName:[imgInfo valueForKey:@"fileName"]];
+            };
+            
+        
             [self.scaleableContainer setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
             [self.scaleableContainer setBackgroundColor:[UIColor clearColor]];
             [self.scaleableContainer addSubview:self.scaleableImageViewScrollView];
@@ -346,17 +347,15 @@
     return collectionViewCell;
 }
 
--(UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return self.scaleableImageView;
-}
-
 -(NSMutableArray *)dataSource{
     if (!_dataSource) {
         _dataSource = [[NSMutableArray alloc]init];
     }
     return _dataSource;
 }
+
+
+//Image
 
 -(void)savaImage:(UIImage*)image Withfilename:(NSString *)fileName
 {
@@ -377,16 +376,70 @@
     return img;
 }
 
--(UIBarButtonItem *)confirmBarButtonItem{
-    if (!_confirmBarButtonItem) {
-        _confirmBarButtonItem = [[UIBarButtonItem alloc]
-                              initWithTitle:@"確定"
-                              style:UIBarButtonItemStylePlain
-                              target:self
-                                 action:@selector(cancelScaleableImageView)];
-    }
-    return _confirmBarButtonItem;
+
+//BarButton Action
+- (void)confirmBarItemAct {
+    [self.scaleableContainer removeFromSuperview];
+    self.scaleableImageView = nil;
+    self.toolbar = nil;
+    self.scaleableImageViewScrollView = nil;
+    self.scaleableContainer = nil;
 }
+
+- (void)deleteWithFileName:(NSString*)fileName
+{
+    self.alertView = [[AlertView alloc]initWithTitle:nil message:@"確定刪除?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"確定", nil];
+    self.alertView.context = fileName;
+    [self.alertView show];
+}
+
+-(void)reTakePhotoWithFileName:(NSString*)fileName
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fileName == %@", fileName];
+    NSArray *filteredArray = [self.dataSource filteredArrayUsingPredicate:predicate];
+    
+    if (filteredArray.count > 0) {
+        self.tempPhotoInfo = [filteredArray[0] mutableCopy];
+        [self takePhoto:nil];
+    }
+}
+
+
+//ScrollView Event
+
+-(UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.scaleableImageView;
+}
+
+-(void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
+    //UIView *subView = [scrollView.subviews objectAtIndex:0];
+    
+    CGFloat offsetX = MAX((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0);
+    CGFloat offsetY = MAX((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0);
+    
+    self.scaleableImageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
+                                                 scrollView.contentSize.height * 0.5 + offsetY);
+}
+
+
+//UIAlertView Event
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if ([alertView isKindOfClass:[AlertView class]]) {
+            AlertView *av = (AlertView*)alertView;
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fileName == %@", av.context];
+            NSArray *filteredArray = [self.dataSource filteredArrayUsingPredicate:predicate];
+            [self.dataSource  removeObjectsInArray:filteredArray];
+            [self.imageContainer reloadData];
+            [self confirmBarItemAct];
+        }
+    }
+}
+
+//Getter
 
 -(ScaleableImageView*)scaleableImageView
 {
@@ -412,17 +465,6 @@
     return _scaleableContainer;
 }
 
--(void)scrollViewDidZoom:(UIScrollView *)scrollView
-{
-    //UIView *subView = [scrollView.subviews objectAtIndex:0];
-    
-    CGFloat offsetX = MAX((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0);
-    CGFloat offsetY = MAX((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0);
-    
-    self.scaleableImageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-                                 scrollView.contentSize.height * 0.5 + offsetY);
-}
-
 -(UITapGestureRecognizer*)tapRecognizer
 {
     if (!_tapRecognizer) {
@@ -431,10 +473,10 @@
     return _tapRecognizer;
 }
 
--(UIToolbar*)toolbar
+-(ScaleableIVToolbar*)toolbar
 {
     if (!_toolbar) {
-        _toolbar = [[UIToolbar alloc]init];
+        _toolbar = [[ScaleableIVToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
     }
     return _toolbar;
 }

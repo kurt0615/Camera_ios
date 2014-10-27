@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4501E73B19FDEB1D0011325A /* ScaleableIVToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501E73A19FDEB1D0011325A /* ScaleableIVToolbar.m */; };
+		4501E73E19FE3D660011325A /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501E73D19FE3D660011325A /* AlertView.m */; };
 		4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327B19F645A500F59E4C /* CollectionViewCell.m */; };
 		4508327F19F64F5A00F59E4C /* ScaleableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327E19F64F5A00F59E4C /* ScaleableImageView.m */; };
 		4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4581CB2819D274DB00A8E2DA /* OverView.xib */; };
@@ -29,6 +31,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4501E73919FDEB1D0011325A /* ScaleableIVToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleableIVToolbar.h; sourceTree = "<group>"; };
+		4501E73A19FDEB1D0011325A /* ScaleableIVToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScaleableIVToolbar.m; sourceTree = "<group>"; };
+		4501E73C19FE3D660011325A /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
+		4501E73D19FE3D660011325A /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		4508327A19F645A500F59E4C /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
 		4508327B19F645A500F59E4C /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		4508327D19F64F5A00F59E4C /* ScaleableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleableImageView.h; sourceTree = "<group>"; };
@@ -101,6 +107,10 @@
 				4508327B19F645A500F59E4C /* CollectionViewCell.m */,
 				4508327D19F64F5A00F59E4C /* ScaleableImageView.h */,
 				4508327E19F64F5A00F59E4C /* ScaleableImageView.m */,
+				4501E73919FDEB1D0011325A /* ScaleableIVToolbar.h */,
+				4501E73A19FDEB1D0011325A /* ScaleableIVToolbar.m */,
+				4501E73C19FE3D660011325A /* AlertView.h */,
+				4501E73D19FE3D660011325A /* AlertView.m */,
 			);
 			path = camera;
 			sourceTree = "<group>";
@@ -237,6 +247,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4508327F19F64F5A00F59E4C /* ScaleableImageView.m in Sources */,
+				4501E73E19FE3D660011325A /* AlertView.m in Sources */,
+				4501E73B19FDEB1D0011325A /* ScaleableIVToolbar.m in Sources */,
 				45EEC6D819D10FF5000E910C /* ViewController.m in Sources */,
 				45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */,
 				4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */,
