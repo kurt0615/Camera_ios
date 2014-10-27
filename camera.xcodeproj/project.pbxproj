@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327B19F645A500F59E4C /* CollectionViewCell.m */; };
+		4508327F19F64F5A00F59E4C /* ScaleableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327E19F64F5A00F59E4C /* ScaleableImageView.m */; };
 		4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4581CB2819D274DB00A8E2DA /* OverView.xib */; };
 		45EEC6D219D10FF5000E910C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D119D10FF5000E910C /* main.m */; };
 		45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D419D10FF5000E910C /* AppDelegate.m */; };
 		45EEC6D819D10FF5000E910C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D719D10FF5000E910C /* ViewController.m */; };
 		45EEC6DB19D10FF5000E910C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45EEC6D919D10FF5000E910C /* Main.storyboard */; };
 		45EEC6DD19D10FF5000E910C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EEC6DC19D10FF5000E910C /* Images.xcassets */; };
-		45EEC6E019D10FF5000E910C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45EEC6DE19D10FF5000E910C /* LaunchScreen.xib */; };
 		45EEC6EC19D10FF5000E910C /* cameraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6EB19D10FF5000E910C /* cameraTests.m */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4508327A19F645A500F59E4C /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		4508327B19F645A500F59E4C /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		4508327D19F64F5A00F59E4C /* ScaleableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleableImageView.h; sourceTree = "<group>"; };
+		4508327E19F64F5A00F59E4C /* ScaleableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScaleableImageView.m; sourceTree = "<group>"; };
 		4581CB2819D274DB00A8E2DA /* OverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverView.xib; sourceTree = "<group>"; };
 		45EEC6CC19D10FF5000E910C /* camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45EEC6D019D10FF5000E910C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,14 +43,11 @@
 		45EEC6D719D10FF5000E910C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		45EEC6DA19D10FF5000E910C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45EEC6DC19D10FF5000E910C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		45EEC6DF19D10FF5000E910C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		45EEC6E519D10FF5000E910C /* cameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45EEC6EA19D10FF5000E910C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45EEC6EB19D10FF5000E910C /* cameraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cameraTests.m; sourceTree = "<group>"; };
 		45EEC70019D150F3000E910C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
-		45EEC70119D150F3000E910C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		45EEC70219D151FE000E910C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		45EEC70319D151FE000E910C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,9 +95,12 @@
 				45EEC6D719D10FF5000E910C /* ViewController.m */,
 				45EEC6D919D10FF5000E910C /* Main.storyboard */,
 				45EEC6DC19D10FF5000E910C /* Images.xcassets */,
-				45EEC6DE19D10FF5000E910C /* LaunchScreen.xib */,
 				4581CB2819D274DB00A8E2DA /* OverView.xib */,
 				45EEC6CF19D10FF5000E910C /* Supporting Files */,
+				4508327A19F645A500F59E4C /* CollectionViewCell.h */,
+				4508327B19F645A500F59E4C /* CollectionViewCell.m */,
+				4508327D19F64F5A00F59E4C /* ScaleableImageView.h */,
+				4508327E19F64F5A00F59E4C /* ScaleableImageView.m */,
 			);
 			path = camera;
 			sourceTree = "<group>";
@@ -213,7 +218,6 @@
 			files = (
 				4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */,
 				45EEC6DB19D10FF5000E910C /* Main.storyboard in Resources */,
-				45EEC6E019D10FF5000E910C /* LaunchScreen.xib in Resources */,
 				45EEC6DD19D10FF5000E910C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,8 +236,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4508327F19F64F5A00F59E4C /* ScaleableImageView.m in Sources */,
 				45EEC6D819D10FF5000E910C /* ViewController.m in Sources */,
 				45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */,
+				4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */,
 				45EEC6D219D10FF5000E910C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,16 +271,6 @@
 				45EEC70219D151FE000E910C /* zh-Hans */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		45EEC6DE19D10FF5000E910C /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				45EEC6DF19D10FF5000E910C /* Base */,
-				45EEC70119D150F3000E910C /* zh-Hant */,
-				45EEC70319D151FE000E910C /* zh-Hans */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -360,7 +356,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = camera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -371,7 +369,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = camera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

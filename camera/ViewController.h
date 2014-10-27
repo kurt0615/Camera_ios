@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate>
+@interface ViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
 
 @end
