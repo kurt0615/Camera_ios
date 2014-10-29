@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "CollectionViewCell.h"
-#import "ScaleableImageView.h"
 #import "ScaleableIVToolbar.h"
 #import "AlertView.h"
 
@@ -22,13 +21,20 @@
 @property (strong, nonatomic) IBOutlet UIView *overlay;
 @property (weak, nonatomic) IBOutlet UICollectionView *imageContainer;
 @property (strong, nonatomic) NSMutableArray *dataSource;
-@property (strong, nonatomic) ScaleableImageView *scaleableImageView;
-@property (strong, nonatomic) UIScrollView *scaleableImageViewScrollView;
-@property (strong, nonatomic) UIView *scaleableContainer;
+//@property (strong, nonatomic) UIImageView *scaleableImageView;
+//@property (strong, nonatomic) UIScrollView *scaleableImageViewScrollView;
+//@property (strong, nonatomic) UIView *scaleableContainer;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
-@property (strong, nonatomic) ScaleableIVToolbar *toolbar;
+//@property (strong, nonatomic) ScaleableIVToolbar *toolbar;
 @property (strong, nonatomic) AlertView *alertView;
 @property (strong, nonatomic) NSMutableDictionary *tempPhotoInfo;
+@property (strong, nonatomic) UIView *scaleableView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scaleableImageViewScrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *scaleableImageView;
+@property (weak, nonatomic) IBOutlet UIToolbar *scaleableImageViewToolBar;
+@property (strong, nonatomic) id confirmBarButtonItemAct;
+@property (strong, nonatomic) id deleteBarButtonItemAct;
+@property (strong, nonatomic) id takephotoBarButtonItemAct;
 @end
 
 @implementation ViewController
@@ -45,18 +51,18 @@
 }
 
 - (void)hideScaleableImageViewToolbar {
-    [UIView animateWithDuration:0.2 animations:^{
-        if (self.toolbar.frame.origin.y == self.view.frame.size.height) {
-            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
-        }else{
-            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
-        }
-    }];
+//    [UIView animateWithDuration:0.2 animations:^{
+//        if (self.toolbar.frame.origin.y == self.view.frame.size.height) {
+//            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+//        }else{
+//            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
+//        }
+//    }];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -75,32 +81,32 @@
     //for test
     
     //75004758-4828-41D9-A4CE-8834F0A14228
-//    UIImageView *img = [[UIImageView alloc]init];
-//    
-//    [img setFrame:CGRectMake(0,0,80.f,80.f)];
-//    img.image = [self loadImageWithFileName:@"75004758-4828-41D9-A4CE-8834F0A14228"];
-//    
-//    NSDictionary *imgInfo = @{
-//                              @"fileName":@"75004758-4828-41D9-A4CE-8834F0A14228",
-//                              @"image":img
-//                              };
-//    
-//    [self.dataSource addObject:imgInfo];
-
+    //    UIImageView *img = [[UIImageView alloc]init];
+    //
+    //    [img setFrame:CGRectMake(0,0,80.f,80.f)];
+    //    img.image = [self loadImageWithFileName:@"75004758-4828-41D9-A4CE-8834F0A14228"];
+    //
+    //    NSDictionary *imgInfo = @{
+    //                              @"fileName":@"75004758-4828-41D9-A4CE-8834F0A14228",
+    //                              @"image":img
+    //                              };
+    //
+    //    [self.dataSource addObject:imgInfo];
+    
     
     
     UIImageView *img = [[UIImageView alloc]init];
-
+    
     [img setFrame:CGRectMake(0,0,80.f,80.f)];
     img.image = [self loadImageWithFileName:@"4D735E26-3E15-40F2-93B4-86FF8714B5FA"];
-
+    
     NSDictionary *imgInfo = @{
                               @"fileName":@"4D735E26-3E15-40F2-93B4-86FF8714B5FA",
                               @"image":img
                               };
     
-        [self.dataSource addObject:imgInfo];
-
+    [self.dataSource addObject:imgInfo];
+    
     
     UIImageView *img2 = [[UIImageView alloc]init];
     
@@ -108,9 +114,9 @@
     img2.image = [self loadImageWithFileName:@"6B687E1B-0781-443B-9F4C-F86E271C804C"];
     
     NSDictionary *imgInfo2 = @{
-                              @"fileName":@"6B687E1B-0781-443B-9F4C-F86E271C804C",
-                              @"image":img2
-                              };
+                               @"fileName":@"6B687E1B-0781-443B-9F4C-F86E271C804C",
+                               @"image":img2
+                               };
     
     
     [self.dataSource addObject:imgInfo2];
@@ -128,18 +134,18 @@
     
     
     [self.dataSource addObject:imgInfo3];
-//    [self.dataSource addObject:imgInfo3];
-//    [self.dataSource addObject:imgInfo3];
-//    [self.dataSource addObject:imgInfo3];
-//    [self.dataSource addObject:imgInfo3];
-//    [self.dataSource addObject:imgInfo3];
-
+    //    [self.dataSource addObject:imgInfo3];
+    //    [self.dataSource addObject:imgInfo3];
+    //    [self.dataSource addObject:imgInfo3];
+    //    [self.dataSource addObject:imgInfo3];
+    //    [self.dataSource addObject:imgInfo3];
+    
     
     [self.imageContainer reloadData];
-
     
     
-     //for test end
+    
+    //for test end
 }
 
 -(CLLocationManager*)locationManager
@@ -156,7 +162,7 @@
 -(UIImagePickerController*)picker
 {
     if (!_picker) {
-       _picker = [[UIImagePickerController alloc] init];
+        _picker = [[UIImagePickerController alloc] init];
     }
     return _picker;
 }
@@ -170,17 +176,17 @@
     
     
     //overlayout use
-//    self.picker.showsCameraControls = NO;
-//    self.picker.navigationBarHidden = YES;
-//    self.picker.toolbarHidden = YES;
-//    
-//    [[NSBundle mainBundle] loadNibNamed:@"OverView" owner:self options:nil];
-//    self.overlay.frame = self.picker.cameraOverlayView.frame;
-//
-//    self.picker.cameraOverlayView = self.overlay;
-//    self.overlay = nil;
+    //    self.picker.showsCameraControls = NO;
+    //    self.picker.navigationBarHidden = YES;
+    //    self.picker.toolbarHidden = YES;
+    //
+    //    [[NSBundle mainBundle] loadNibNamed:@"OverView" owner:self options:nil];
+    //    self.overlay.frame = self.picker.cameraOverlayView.frame;
+    //
+    //    self.picker.cameraOverlayView = self.overlay;
+    //    self.overlay = nil;
     //overlayout use end
-   
+    
     
     [self presentViewController:self.picker animated:YES completion:NULL];
 }
@@ -195,7 +201,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-
+    
     if ([CLLocationManager locationServicesEnabled]) {
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1 ){
             [self.locationManager requestWhenInUseAuthorization];
@@ -294,54 +300,107 @@
         
         __weak ViewController *weakViewController = self;
         __weak CollectionViewCell *weakCollectionViewCell = collectionViewCell;
+      
         
         collectionViewCell.act = ^{
+           
+        /*
+         *  Method.1
+         *  Add View Programmatically
+         */
             
-            [self.scaleableImageView setUserInteractionEnabled:YES];
+            //            [self.scaleableImageView setUserInteractionEnabled:YES];
+            //            [self.scaleableImageView setContentMode:UIViewContentModeScaleAspectFit];
+            //            self.scaleableImageView.image = ((UIImageView*)[imgInfo valueForKey:@"image"]).image;
+            //            [self.scaleableImageView setFrame:weakCollectionViewCell.frame];
+            //
+            //            [self.scaleableImageViewScrollView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            //            [self.scaleableImageViewScrollView setBackgroundColor:[UIColor clearColor]];
+            //            self.scaleableImageViewScrollView.delegate = self;
+            //            self.scaleableImageViewScrollView.contentSize = self.view.frame.size;
+            //            self.scaleableImageViewScrollView.minimumZoomScale = .5f;
+            //            self.scaleableImageViewScrollView.maximumZoomScale = 3.0f;
+            //            //self.scaleableImageViewScrollView.bouncesZoom = NO;
+            //            //self.scaleableImageViewScrollView.bounces = NO;
+            //            [self.scaleableImageViewScrollView addSubview:self.scaleableImageView];
+            //
+            //
+            //            self.toolbar.confirmBarButtonItemAct = ^{
+            //                [weakViewController confirmBarItemAct];
+            //            };
+            //
+            //            self.toolbar.deleteBarButtonItemAct = ^{
+            //                [weakViewController deleteWithFileName:[imgInfo valueForKey:@"fileName"]];
+            //            };
+            //
+            //            self.toolbar.takephotoBarButtonItemAct = ^{
+            //                [weakViewController reTakePhotoWithFileName:[imgInfo valueForKey:@"fileName"]];
+            //            };
+            //
+            //
+            //            [self.scaleableContainer setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            //            [self.scaleableContainer setBackgroundColor:[UIColor clearColor]];
+            //            [self.scaleableContainer addSubview:self.scaleableImageViewScrollView];
+            //            [self.tapRecognizer addTarget:self action:@selector(hideScaleableImageViewToolbar)];
+            //            [self.scaleableContainer addGestureRecognizer:self.tapRecognizer];
+            //            [self.view addSubview:self.scaleableContainer];
+            //
+            //            [UIView animateWithDuration:0.4
+            //                             animations:^{
+            //                                 [self.scaleableImageView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            //                             }
+            //                             completion:^(BOOL finished) {
+            //                                 [self.scaleableContainer addSubview:self.toolbar];
+            //                                 [self.scaleableContainer bringSubviewToFront:self.toolbar];
+            //                                 [self.scaleableContainer setBackgroundColor:[UIColor blackColor]];
+            //                             }];
+           
+           
+        /* 
+         *  Method.2
+         *  Add View from Xib
+         */
+            
+            weakViewController.scaleableView = (UIView*)[[[NSBundle mainBundle] loadNibNamed:@"ScaleableView" owner:self options:nil] objectAtIndex:0];
+            [weakViewController.scaleableView setBackgroundColor:[UIColor clearColor]];
             [self.scaleableImageView setContentMode:UIViewContentModeScaleAspectFit];
             self.scaleableImageView.image = ((UIImageView*)[imgInfo valueForKey:@"image"]).image;
             [self.scaleableImageView setFrame:weakCollectionViewCell.frame];
-            
-            [self.scaleableImageViewScrollView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+
             [self.scaleableImageViewScrollView setBackgroundColor:[UIColor clearColor]];
+            [self.scaleableImageViewScrollView setFrame:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height)];
             self.scaleableImageViewScrollView.delegate = self;
             self.scaleableImageViewScrollView.contentSize = self.view.frame.size;
             self.scaleableImageViewScrollView.minimumZoomScale = .5f;
             self.scaleableImageViewScrollView.maximumZoomScale = 3.0f;
-            //self.scaleableImageViewScrollView.bouncesZoom = NO;
-            //self.scaleableImageViewScrollView.bounces = NO;
-            [self.scaleableImageViewScrollView addSubview:self.scaleableImageView];
-
-           
-            self.toolbar.confirmBarButtonItemAct = ^{
-                [weakViewController confirmBarItemAct];
+            [self.scaleableImageViewToolBar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+            
+            [weakViewController.scaleableView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            [self.view addSubview:weakViewController.scaleableView];
+            
+            
+            weakViewController.confirmBarButtonItemAct = ^{
+               [weakViewController confirmBarItemAct];
             };
             
-            self.toolbar.deleteBarButtonItemAct = ^{
-                [weakViewController deleteWithFileName:[imgInfo valueForKey:@"fileName"]];
+            weakViewController.deleteBarButtonItemAct = ^{
+               [weakViewController deleteWithFileName:[imgInfo valueForKey:@"fileName"]];
             };
             
-            self.toolbar.takephotoBarButtonItemAct = ^{
+            weakViewController.takephotoBarButtonItemAct = ^{
                 [weakViewController reTakePhotoWithFileName:[imgInfo valueForKey:@"fileName"]];
             };
             
-        
-            [self.scaleableContainer setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
-            [self.scaleableContainer setBackgroundColor:[UIColor clearColor]];
-            [self.scaleableContainer addSubview:self.scaleableImageViewScrollView];
-            [self.tapRecognizer addTarget:self action:@selector(hideScaleableImageViewToolbar)];
-            [self.scaleableContainer addGestureRecognizer:self.tapRecognizer];
-            [self.view addSubview:self.scaleableContainer];
             
             [UIView animateWithDuration:0.4
                              animations:^{
-                                 [self.scaleableImageView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
+                                 [weakViewController.scaleableImageView setFrame:CGRectMake(0,0, self.view.bounds.size.width, self.view.bounds.size.height)];
                              }
                              completion:^(BOOL finished) {
-                                 [self.scaleableContainer addSubview:self.toolbar];
-                                 [self.scaleableContainer bringSubviewToFront:self.toolbar];
-                                 [self.scaleableContainer setBackgroundColor:[UIColor blackColor]];
+                                 [weakViewController.scaleableView setBackgroundColor:[UIColor blackColor]];
+                                 [weakViewController.scaleableImageViewToolBar setHidden:false];
                              }];
+            
         };
     }
     return collectionViewCell;
@@ -356,7 +415,6 @@
 
 
 //Image
-
 -(void)savaImage:(UIImage*)image Withfilename:(NSString *)fileName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -379,11 +437,13 @@
 
 //BarButton Action
 - (void)confirmBarItemAct {
-    [self.scaleableContainer removeFromSuperview];
-    self.scaleableImageView = nil;
-    self.toolbar = nil;
-    self.scaleableImageViewScrollView = nil;
-    self.scaleableContainer = nil;
+//    [self.scaleableContainer removeFromSuperview];
+//    self.scaleableImageView = nil;
+//    self.toolbar = nil;
+//    self.scaleableImageViewScrollView = nil;
+//    self.scaleableContainer = nil;
+    
+    [self.scaleableView removeFromSuperview];
 }
 
 - (void)deleteWithFileName:(NSString*)fileName
@@ -404,6 +464,19 @@
     }
 }
 
+- (IBAction)confirmBarItemAct:(id)sender {
+    [self.confirmBarButtonItemAct invoke];
+}
+
+
+- (IBAction)delete:(id)sender WithFileName:(NSString*)fileName{
+    [self.deleteBarButtonItemAct invoke];
+}
+
+- (IBAction)reTakePhoto:(id)sender  WithFileName:(NSString*)fileName{
+    [self.takephotoBarButtonItemAct invoke];
+}
+
 
 //ScrollView Event
 
@@ -412,15 +485,28 @@
     return self.scaleableImageView;
 }
 
+
+
+
 -(void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    //UIView *subView = [scrollView.subviews objectAtIndex:0];
+    CGSize boundsSize = scrollView.bounds.size;
+
+    CGRect contentsFrame = self.scaleableImageView.frame;
     
-    CGFloat offsetX = MAX((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0);
-    CGFloat offsetY = MAX((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0);
+    if (contentsFrame.size.width < boundsSize.width) {
+        contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
+    } else {
+        contentsFrame.origin.x = 0.0f;
+    }
     
-    self.scaleableImageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-                                                 scrollView.contentSize.height * 0.5 + offsetY);
+    if (contentsFrame.size.height < boundsSize.height) {
+        contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
+    } else {
+        contentsFrame.origin.y = 0.0f;
+    }
+    
+    self.scaleableImageView.frame = contentsFrame;
 }
 
 
@@ -441,43 +527,43 @@
 
 //Getter
 
--(ScaleableImageView*)scaleableImageView
-{
-    if (!_scaleableImageView) {
-         _scaleableImageView = [[ScaleableImageView alloc] init];
-    }
-    return _scaleableImageView;
-}
-
--(UIScrollView*)scaleableImageViewScrollView
-{
-    if (!_scaleableImageViewScrollView) {
-        _scaleableImageViewScrollView = [[UIScrollView alloc]init];
-    }
-    return _scaleableImageViewScrollView;
-}
-
--(UIView*)scaleableContainer
-{
-    if (!_scaleableContainer) {
-        _scaleableContainer = [[UIView alloc]init];
-    }
-    return _scaleableContainer;
-}
-
--(UITapGestureRecognizer*)tapRecognizer
-{
-    if (!_tapRecognizer) {
-        _tapRecognizer = [[UITapGestureRecognizer alloc]init];
-    }
-    return _tapRecognizer;
-}
-
--(ScaleableIVToolbar*)toolbar
-{
-    if (!_toolbar) {
-        _toolbar = [[ScaleableIVToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
-    }
-    return _toolbar;
-}
+//-(ScaleableImageView*)scaleableImageView
+//{
+//    if (!_scaleableImageView) {
+//        _scaleableImageView = [[ScaleableImageView alloc] init];
+//    }
+//    return _scaleableImageView;
+//}
+//
+//-(UIScrollView*)scaleableImageViewScrollView
+//{
+//    if (!_scaleableImageViewScrollView) {
+//        _scaleableImageViewScrollView = [[UIScrollView alloc]init];
+//    }
+//    return _scaleableImageViewScrollView;
+//}
+//
+//-(UIView*)scaleableContainer
+//{
+//    if (!_scaleableContainer) {
+//        _scaleableContainer = [[UIView alloc]init];
+//    }
+//    return _scaleableContainer;
+//}
+//
+//-(UITapGestureRecognizer*)tapRecognizer
+//{
+//    if (!_tapRecognizer) {
+//        _tapRecognizer = [[UITapGestureRecognizer alloc]init];
+//    }
+//    return _tapRecognizer;
+//}
+//
+//-(ScaleableIVToolbar*)toolbar
+//{
+//    if (!_toolbar) {
+//        _toolbar = [[ScaleableIVToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+//    }
+//    return _toolbar;
+//}
 @end
