@@ -35,6 +35,7 @@
 @property (strong, nonatomic) id confirmBarButtonItemAct;
 @property (strong, nonatomic) id deleteBarButtonItemAct;
 @property (strong, nonatomic) id takephotoBarButtonItemAct;
+@property (strong, nonatomic) UIButton *addPhotoBtn;
 @end
 
 @implementation ViewController
@@ -140,6 +141,19 @@
     //    [self.dataSource addObject:imgInfo3];
     //    [self.dataSource addObject:imgInfo3];
     
+    
+//    UIImageView *img4 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"add"]];
+//    
+//    [img4 setFrame:CGRectMake(0,0,80.f,80.f)];
+//    
+//    NSDictionary *imgInfo4 = @{
+//                               @"fileName":@"cover",
+//                               @"image":img4
+//                               };
+//    
+//    
+//    [self.dataSource addObject:imgInfo4];
+
     
     [self.imageContainer reloadData];
     
@@ -283,17 +297,17 @@
 }
 
 
+// CollectionView Event
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+    return self.dataSource.count + 1;
 }
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCell * collectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    if(collectionViewCell){
-        
+    if(collectionViewCell && self.dataSource.count > indexPath.row){
         NSDictionary *imgInfo = self.dataSource[indexPath.row];
         
         [collectionViewCell.contentView addSubview:[imgInfo valueForKey:@"image"]];
@@ -301,7 +315,6 @@
         __weak ViewController *weakViewController = self;
         __weak CollectionViewCell *weakCollectionViewCell = collectionViewCell;
       
-        
         collectionViewCell.act = ^{
            
         /*
@@ -402,19 +415,20 @@
                              }];
             
         };
+    }else{
+        //for add icon
+        [self.addPhotoBtn removeFromSuperview];
+        [collectionViewCell.contentView addSubview:self.addPhotoBtn];
     }
     return collectionViewCell;
 }
 
--(NSMutableArray *)dataSource{
-    if (!_dataSource) {
-        _dataSource = [[NSMutableArray alloc]init];
-    }
-    return _dataSource;
+-(void)abc
+{
+    NSLog(@"aaa");
 }
 
-
-//Image
+//Image Util
 -(void)savaImage:(UIImage*)image Withfilename:(NSString *)fileName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -486,8 +500,6 @@
 }
 
 
-
-
 -(void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     CGSize boundsSize = scrollView.bounds.size;
@@ -526,7 +538,27 @@
 }
 
 //Getter
+-(NSMutableArray *)dataSource{
+    if (!_dataSource) {
+        _dataSource = [[NSMutableArray alloc]init];
+    }
+    return _dataSource;
+}
 
+-(UIButton*)addPhotoBtn
+{
+    if (!_addPhotoBtn) {
+        _addPhotoBtn = [[UIButton alloc]init];
+        [_addPhotoBtn setFrame:CGRectMake(0,0,80.f,80.f)];
+        [_addPhotoBtn setTitle:@"新增" forState:UIControlStateNormal];
+        [_addPhotoBtn setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
+        _addPhotoBtn.layer.borderColor = [[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor];
+        _addPhotoBtn.layer.borderWidth = 1;
+        _addPhotoBtn.layer.cornerRadius = 5;
+        [_addPhotoBtn addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _addPhotoBtn;
+}
 //-(ScaleableImageView*)scaleableImageView
 //{
 //    if (!_scaleableImageView) {
