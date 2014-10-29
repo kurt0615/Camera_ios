@@ -50,14 +50,14 @@
     [self.picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)hideScaleableImageViewToolbar {
-//    [UIView animateWithDuration:0.2 animations:^{
-//        if (self.toolbar.frame.origin.y == self.view.frame.size.height) {
-//            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
-//        }else{
-//            [self.toolbar setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
-//        }
-//    }];
+- (IBAction)hideScaleableViewToolbar:(id)sender {
+        [UIView animateWithDuration:0.2 animations:^{
+            if (self.scaleableImageViewToolBar.frame.origin.y == self.view.frame.size.height) {
+                [self.scaleableImageViewToolBar setFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+            }else{
+                [self.scaleableImageViewToolBar setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
+            }
+        }];
 }
 
 - (void)viewDidLoad {
