@@ -10,6 +10,7 @@
 		4501E73B19FDEB1D0011325A /* ScaleableIVToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501E73A19FDEB1D0011325A /* ScaleableIVToolbar.m */; };
 		4501E73E19FE3D660011325A /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501E73D19FE3D660011325A /* AlertView.m */; };
 		4501E74019FF45970011325A /* ScaleableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4501E73F19FF45970011325A /* ScaleableView.xib */; };
+		4501E7441A022F380011325A /* DownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501E7431A022F380011325A /* DownloadViewController.m */; };
 		4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327B19F645A500F59E4C /* CollectionViewCell.m */; };
 		4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4581CB2819D274DB00A8E2DA /* OverView.xib */; };
 		45EEC6D219D10FF5000E910C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D119D10FF5000E910C /* main.m */; };
@@ -36,6 +37,8 @@
 		4501E73C19FE3D660011325A /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		4501E73D19FE3D660011325A /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		4501E73F19FF45970011325A /* ScaleableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScaleableView.xib; sourceTree = "<group>"; };
+		4501E7421A022F380011325A /* DownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadViewController.h; sourceTree = "<group>"; };
+		4501E7431A022F380011325A /* DownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadViewController.m; sourceTree = "<group>"; };
 		4508327A19F645A500F59E4C /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
 		4508327B19F645A500F59E4C /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		4581CB2819D274DB00A8E2DA /* OverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverView.xib; sourceTree = "<group>"; };
@@ -73,9 +76,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4501E7411A022F0E0011325A /* downloadTask */ = {
+			isa = PBXGroup;
+			children = (
+				4501E7421A022F380011325A /* DownloadViewController.h */,
+				4501E7431A022F380011325A /* DownloadViewController.m */,
+			);
+			name = downloadTask;
+			sourceTree = "<group>";
+		};
 		45EEC6C319D10FF5000E910C = {
 			isa = PBXGroup;
 			children = (
+				45EEC6D919D10FF5000E910C /* Main.storyboard */,
+				45EEC6CF19D10FF5000E910C /* Supporting Files */,
+				4501E7411A022F0E0011325A /* downloadTask */,
 				45EEC6CE19D10FF5000E910C /* camera */,
 				45EEC6E819D10FF5000E910C /* cameraTests */,
 				45EEC6CD19D10FF5000E910C /* Products */,
@@ -98,10 +113,8 @@
 				45EEC6D419D10FF5000E910C /* AppDelegate.m */,
 				45EEC6D619D10FF5000E910C /* ViewController.h */,
 				45EEC6D719D10FF5000E910C /* ViewController.m */,
-				45EEC6D919D10FF5000E910C /* Main.storyboard */,
 				45EEC6DC19D10FF5000E910C /* Images.xcassets */,
 				4581CB2819D274DB00A8E2DA /* OverView.xib */,
-				45EEC6CF19D10FF5000E910C /* Supporting Files */,
 				4508327A19F645A500F59E4C /* CollectionViewCell.h */,
 				4508327B19F645A500F59E4C /* CollectionViewCell.m */,
 				4501E73919FDEB1D0011325A /* ScaleableIVToolbar.h */,
@@ -120,6 +133,7 @@
 				45EEC6D119D10FF5000E910C /* main.m */,
 			);
 			name = "Supporting Files";
+			path = camera;
 			sourceTree = "<group>";
 		};
 		45EEC6E819D10FF5000E910C /* cameraTests */ = {
@@ -246,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4501E73E19FE3D660011325A /* AlertView.m in Sources */,
+				4501E7441A022F380011325A /* DownloadViewController.m in Sources */,
 				4501E73B19FDEB1D0011325A /* ScaleableIVToolbar.m in Sources */,
 				45EEC6D819D10FF5000E910C /* ViewController.m in Sources */,
 				45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */,
@@ -281,6 +296,7 @@
 				45EEC70219D151FE000E910C /* zh-Hans */,
 			);
 			name = Main.storyboard;
+			path = camera;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

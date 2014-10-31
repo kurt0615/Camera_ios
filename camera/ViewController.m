@@ -96,45 +96,45 @@
     
     
     
-    UIImageView *img = [[UIImageView alloc]init];
-    
-    [img setFrame:CGRectMake(0,0,80.f,80.f)];
-    img.image = [self loadImageWithFileName:@"4D735E26-3E15-40F2-93B4-86FF8714B5FA"];
-    
-    NSDictionary *imgInfo = @{
-                              @"fileName":@"4D735E26-3E15-40F2-93B4-86FF8714B5FA",
-                              @"image":img
-                              };
-    
-    [self.dataSource addObject:imgInfo];
-    
-    
-    UIImageView *img2 = [[UIImageView alloc]init];
-    
-    [img2 setFrame:CGRectMake(0,0,80.f,80.f)];
-    img2.image = [self loadImageWithFileName:@"6B687E1B-0781-443B-9F4C-F86E271C804C"];
-    
-    NSDictionary *imgInfo2 = @{
-                               @"fileName":@"6B687E1B-0781-443B-9F4C-F86E271C804C",
-                               @"image":img2
-                               };
-    
-    
-    [self.dataSource addObject:imgInfo2];
-    
-    
-    UIImageView *img3 = [[UIImageView alloc]init];
-    
-    [img3 setFrame:CGRectMake(0,0,80.f,80.f)];
-    img3.image = [self loadImageWithFileName:@"741F4702-38D7-485B-8C56-F33214E335C5"];
-    
-    NSDictionary *imgInfo3 = @{
-                               @"fileName":@"741F4702-38D7-485B-8C56-F33214E335C5",
-                               @"image":img3
-                               };
-    
-    
-    [self.dataSource addObject:imgInfo3];
+//    UIImageView *img = [[UIImageView alloc]init];
+//    
+//    [img setFrame:CGRectMake(0,0,80.f,80.f)];
+//    img.image = [self loadImageWithFileName:@"4D735E26-3E15-40F2-93B4-86FF8714B5FA"];
+//    
+//    NSDictionary *imgInfo = @{
+//                              @"fileName":@"4D735E26-3E15-40F2-93B4-86FF8714B5FA",
+//                              @"image":img
+//                              };
+//    
+//    [self.dataSource addObject:imgInfo];
+//    
+//    
+//    UIImageView *img2 = [[UIImageView alloc]init];
+//    
+//    [img2 setFrame:CGRectMake(0,0,80.f,80.f)];
+//    img2.image = [self loadImageWithFileName:@"6B687E1B-0781-443B-9F4C-F86E271C804C"];
+//    
+//    NSDictionary *imgInfo2 = @{
+//                               @"fileName":@"6B687E1B-0781-443B-9F4C-F86E271C804C",
+//                               @"image":img2
+//                               };
+//    
+//    
+//    [self.dataSource addObject:imgInfo2];
+//    
+//    
+//    UIImageView *img3 = [[UIImageView alloc]init];
+//    
+//    [img3 setFrame:CGRectMake(0,0,80.f,80.f)];
+//    img3.image = [self loadImageWithFileName:@"741F4702-38D7-485B-8C56-F33214E335C5"];
+//    
+//    NSDictionary *imgInfo3 = @{
+//                               @"fileName":@"741F4702-38D7-485B-8C56-F33214E335C5",
+//                               @"image":img3
+//                               };
+//    
+//    
+//    [self.dataSource addObject:imgInfo3];
     //    [self.dataSource addObject:imgInfo3];
     //    [self.dataSource addObject:imgInfo3];
     //    [self.dataSource addObject:imgInfo3];
@@ -155,7 +155,7 @@
 //    [self.dataSource addObject:imgInfo4];
 
     
-    [self.imageContainer reloadData];
+    //[self.imageContainer reloadData];
     
     
     
@@ -226,6 +226,7 @@
     }
     
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    
     UIImageView *img = [[UIImageView alloc]init];
     [img setFrame:CGRectMake(0,0,80.f,80.f)];
     img.image = chosenImage;
