@@ -63,7 +63,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         
         UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
