@@ -153,6 +153,7 @@
 		45DCBAB31A08A88C00C52D91 /* cameraMutil */ = {
 			isa = PBXGroup;
 			children = (
+				451F22FB1A0B44CA009F3F8E /* SelectionDelegate.h */,
 				45DCBAC91A08AADD00C52D91 /* MutilePickerViewController.h */,
 				45DCBACA1A08AADD00C52D91 /* MutilePickerViewController.m */,
 				45DCBACC1A08B7B400C52D91 /* AlbumTableViewController.h */,
@@ -163,7 +164,6 @@
 				45DCBAD91A0A0F6600C52D91 /* PhotoCollectionViewCell.m */,
 				45DCBAE11A0A388300C52D91 /* PhotoVo.h */,
 				45DCBAE21A0A388300C52D91 /* PhotoVo.m */,
-				451F22FB1A0B44CA009F3F8E /* SelectionDelegate.h */,
 				451F22FC1A0B8518009F3F8E /* backup */,
 			);
 			name = cameraMutil;
