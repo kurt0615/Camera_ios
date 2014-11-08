@@ -8,6 +8,7 @@
 
 @class PhotoVo;
 @protocol SelectionDelegate <NSObject>
--(BOOL)shouldSelect:(PhotoVo*)photos WithCounts:(NSUInteger)count;
+-(BOOL)shouldSelect:(PhotoVo*)photos WithCounts:(NSInteger)count;
+-(BOOL)shouldDeSelect:(PhotoVo*)photos WithCounts:(NSInteger)count;
 -(void)didSelected:(NSMutableArray*)photos;
 @end

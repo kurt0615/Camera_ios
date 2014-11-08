@@ -17,7 +17,7 @@
 
 @interface PhotoVo : NSObject
 @property (nonatomic, strong) ALAsset *photo;
-@property (nonatomic) BOOL selected;
+@property (nonatomic, assign) BOOL selected;
 @property (nonatomic, weak) id<PhotoVoDelegate> photoVoDelegate;
--(instancetype)initWithPhoto:(ALAsset *)photo;
+-(instancetype)initWithPhoto:(ALAsset *)photo Selected:(BOOL)select;
 @end

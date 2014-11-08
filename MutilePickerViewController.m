@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.maximaCount = 4;
+    self.maximaCount = 5;
 }
 
 //- (IBAction)GoToPhoto:(id)sender {

@@ -11,7 +11,6 @@
 
 @interface PhotoCollectionViewController ()
 @property (nonatomic, strong) NSMutableArray *photos;
-@property (nonatomic, strong) NSMutableArray *selectedPhotos;
 @end
 
 @implementation PhotoCollectionViewController
@@ -27,7 +26,6 @@
 -(void)setAssetGroup:(ALAssetsGroup *)assetGroup
 {
     _assetGroup = assetGroup;
-    [self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
 }
 
 -(NSMutableArray*)selectedPhotos
@@ -40,6 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
     [self.collectionView setAllowsSelection:NO];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
     [self.navigationItem setRightBarButtonItem:doneButtonItem];
@@ -62,11 +61,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    
     [cell setAssets:[self.photos objectAtIndex:indexPath.row]];
-    
     return cell;
 }
 
@@ -79,12 +75,30 @@
             return;
         }
         
-        PhotoVo *photoVo = [[PhotoVo alloc] initWithPhoto:result];
-        photoVo.PhotoVoDelegate = self;
-        [self.photos addObject:photoVo];
+        BOOL selected = NO;
         
+        if (self.selectedPhotos) {
+            for (PhotoVo *obj in self.selectedPhotos) {
+                if ([[[[obj.photo defaultRepresentation]url] absoluteString]
+                     isEqualToString:[[[result defaultRepresentation]url] absoluteString]]) {
+                    selected = YES;
+                    [self.selectedPhotos removeObject:obj];
+                    break;
+                }
+            }
+        }
+        
+        PhotoVo *photoVo  = [[PhotoVo alloc] initWithPhoto:result Selected:selected];
+        photoVo.PhotoVoDelegate = self;
+        
+        if (selected) {
+            [self.selectedPhotos addObject:photoVo];
+        }
+        [self.photos addObject:photoVo];
     }];
+    
     dispatch_sync(dispatch_get_main_queue(), ^{
+        [self setTitleCount];
         [self.collectionView reloadData];
     });
 }
@@ -92,27 +106,35 @@
 #pragma photVoDelegate impl.
 -(BOOL)photoSelected:(Boolean)selected WithPhoto:(PhotoVo *)photoVo
 {
-    if ([self.selectionDelegate respondsToSelector:@selector(shouldSelect:WithCounts:)]) {
-        if (selected) {
+    if (selected) {
+        if ([self.selectionDelegate respondsToSelector:@selector(shouldSelect:WithCounts:)]) {
             if ([self.selectionDelegate shouldSelect:photoVo WithCounts:self.selectedPhotos.count]) {
-                [self.selectedPhotos addObject:photoVo];
-                NSLog(@"-(BOOL)photoSelected:(Boolean)selected WithPhoto:(PhotoVo *)photoVo YES");
             }else{
-                NSLog(@"-(BOOL)photoSelected:(Boolean)selected WithPhoto:(PhotoVo *)photoVo NO");
                 return NO;
-            };
-        }else{
-            [self.selectedPhotos removeObject:photoVo];
+            }
         }
-        
-        if (self.selectedPhotos.count == 0) {
-            self.title = [[NSString alloc]initWithFormat:@"%@", [self.assetGroup valueForProperty:ALAssetsGroupPropertyName]];
-        }else{
-            self.title = [[NSString alloc]initWithFormat:@"%@ (已選擇%ld/%ld張)", [self.assetGroup valueForProperty:ALAssetsGroupPropertyName],self.selectedPhotos.count,self.maximaCount];
+    }else{
+        if ([self.selectionDelegate respondsToSelector:@selector(shouldDeSelect:WithCounts:)]) {
+            if ([self.selectionDelegate shouldDeSelect:photoVo WithCounts:self.selectedPhotos.count]) {
+            }
+        }else {
+            return NO;
         }
-        return YES;
     }
-    return NO;
+    
+    [self setTitleCount];
+
+    
+    return YES;
+}
+
+-(void)setTitleCount
+{
+    if (self.selectedPhotos.count == 0) {
+        self.title = [[NSString alloc]initWithFormat:@"%@", [self.assetGroup valueForProperty:ALAssetsGroupPropertyName]];
+    }else{
+        self.title = [[NSString alloc]initWithFormat:@"%@ (已選擇%ld)", [self.assetGroup valueForProperty:ALAssetsGroupPropertyName],self.selectedPhotos.count];
+    }
 }
 
 

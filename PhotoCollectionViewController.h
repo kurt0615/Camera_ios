@@ -14,5 +14,5 @@
 @interface PhotoCollectionViewController : UICollectionViewController <PhotoVoDelegate>
 @property (nonatomic, strong) ALAssetsGroup *assetGroup;
 @property (nonatomic, weak) id <SelectionDelegate> selectionDelegate;
-@property (nonatomic) NSInteger maximaCount;
+@property (nonatomic, strong) NSMutableArray *selectedPhotos;
 @end

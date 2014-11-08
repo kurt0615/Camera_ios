@@ -14,6 +14,7 @@
 		4508327C19F645A500F59E4C /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4508327B19F645A500F59E4C /* CollectionViewCell.m */; };
 		452836621A07585000C387A6 /* AutoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 452836611A07585000C387A6 /* AutoViewController.m */; };
 		4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4581CB2819D274DB00A8E2DA /* OverView.xib */; };
+		4595C6991A0C9AD6004E1353 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4595C6981A0C9AD6004E1353 /* AlbumTableViewCell.m */; };
 		45DCBAC01A08AA8900C52D91 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBABF1A08AA8900C52D91 /* MobileCoreServices.framework */; };
 		45DCBAC21A08AA9000C52D91 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBAC11A08AA9000C52D91 /* AssetsLibrary.framework */; };
 		45DCBAC41A08AA9600C52D91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBAC31A08AA9600C52D91 /* CoreGraphics.framework */; };
@@ -59,6 +60,8 @@
 		452836601A07585000C387A6 /* AutoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoViewController.h; sourceTree = "<group>"; };
 		452836611A07585000C387A6 /* AutoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoViewController.m; sourceTree = "<group>"; };
 		4581CB2819D274DB00A8E2DA /* OverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverView.xib; sourceTree = "<group>"; };
+		4595C6971A0C9AD6004E1353 /* AlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumTableViewCell.h; sourceTree = "<group>"; };
+		4595C6981A0C9AD6004E1353 /* AlbumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumTableViewCell.m; sourceTree = "<group>"; };
 		45DCBABF1A08AA8900C52D91 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		45DCBAC11A08AA9000C52D91 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		45DCBAC31A08AA9600C52D91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -158,6 +161,8 @@
 				45DCBACA1A08AADD00C52D91 /* MutilePickerViewController.m */,
 				45DCBACC1A08B7B400C52D91 /* AlbumTableViewController.h */,
 				45DCBACD1A08B7B400C52D91 /* AlbumTableViewController.m */,
+				4595C6971A0C9AD6004E1353 /* AlbumTableViewCell.h */,
+				4595C6981A0C9AD6004E1353 /* AlbumTableViewCell.m */,
 				45DCBADB1A0A0FA300C52D91 /* PhotoCollectionViewController.h */,
 				45DCBADC1A0A0FA300C52D91 /* PhotoCollectionViewController.m */,
 				45DCBAD81A0A0F6600C52D91 /* PhotoCollectionViewCell.h */,
@@ -364,6 +369,7 @@
 				45DCBAE31A0A388300C52D91 /* PhotoVo.m in Sources */,
 				4501E73B19FDEB1D0011325A /* ScaleableIVToolbar.m in Sources */,
 				45DCBAD11A08CC6A00C52D91 /* PhotoPickerRoot.m in Sources */,
+				4595C6991A0C9AD6004E1353 /* AlbumTableViewCell.m in Sources */,
 				45EEC6D819D10FF5000E910C /* ViewController.m in Sources */,
 				45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */,
 				45DCBADA1A0A0F6600C52D91 /* PhotoCollectionViewCell.m in Sources */,

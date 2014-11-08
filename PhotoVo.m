@@ -12,12 +12,12 @@
 @end
 
 @implementation PhotoVo
--(instancetype)initWithPhoto:(ALAsset *)photo
+-(instancetype)initWithPhoto:(ALAsset *)photo Selected:(BOOL)select;
 {
     self = [super init];
     if (self) {
         _photo = photo;
-        _selected = NO;
+        _selected = select;
     }
     return self;
 }

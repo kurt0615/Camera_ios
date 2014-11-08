@@ -11,9 +11,11 @@
 #import "PhotoCollectionViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "AlbumTableViewCell.h"
 
 @interface AlbumTableViewController ()
 @property (nonatomic, strong) ALAssetsLibrary *library;
+@property (nonatomic, strong) NSIndexPath *pickIndexPath;
 @end
 
 @implementation AlbumTableViewController
@@ -34,29 +36,39 @@
     return _library;
 }
 
+-(NSMutableDictionary*)selectedPhotosAll
+{
+    if (!_selectedPhotosAll) {
+        _selectedPhotosAll = [[NSMutableDictionary alloc] init];
+        
+        //        for (ALAssetsGroup *group in self.assetGroups) {
+        //            [_selectedPhotosAll setObject:[[NSMutableArray alloc]init] forKey:[group valueForProperty:ALAssetsGroupPropertyName]];
+        //        }
+    }
+    return _selectedPhotosAll;
+}
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-
+    
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelImagePicker)];
     [self.navigationItem setRightBarButtonItem:cancelButton];
     
     // Load Albums into assetGroups
-    
     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                       [self.library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                       [self.library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
                            if (group == nil) {
                                return;
                            }
                            
-                           // added fix for camera albums order
-                           NSString *sGroupPropertyName = (NSString *)[group valueForProperty:ALAssetsGroupPropertyName];
-                           NSUInteger nType = [[group valueForProperty:ALAssetsGroupPropertyType] intValue];
+                           //init selected list
+                           NSString *groupPropertyID = (NSString *)[group valueForProperty:ALAssetsGroupPropertyPersistentID];
+                           [self.selectedPhotosAll setObject:[[NSMutableArray alloc]init] forKey:groupPropertyID];
                            
-                           if ([[sGroupPropertyName lowercaseString] isEqualToString:@"camera roll"] && nType == ALAssetsGroupSavedPhotos) {
+                           //set camera roll first
+                           if ([[group valueForProperty:ALAssetsGroupPropertyType] intValue] == ALAssetsGroupSavedPhotos) {
                                [self.assetGroups insertObject:group atIndex:0];
                            }
                            else {
@@ -80,8 +92,8 @@
                        }];
                    });
     
-
-
+    
+    
 }
 
 #pragma mark - Table view data source
@@ -98,10 +110,38 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[AlbumTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    CGRect frame = cell.selectedCount.frame;
+    frame.origin.x = self.view.bounds.size.width - cell.selectedCount.bounds.size.width - 60;
+    cell.selectedCount.frame = frame;
+    
+    //add Constraint
+    //    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    //    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:cell.selectedCount
+    //                                                               attribute:NSLayoutAttributeTrailing
+    //                                                               relatedBy:NSLayoutRelationEqual
+    //                                                                  toItem:cell.contentView
+    //                                                               attribute:NSLayoutAttributeTrailingMargin
+    //                                                              multiplier:0.0
+    //                                                                constant:50.0];
+    //    [cell.contentView addConstraint:centerY];
+    //
+    //    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:cell.selectedCount
+    //                                                               attribute:NSLayoutAttributeTop
+    //                                                               relatedBy:NSLayoutRelationEqual
+    //                                                                  toItem:cell.contentView
+    //                                                               attribute:NSLayoutAttributeTopMargin
+    //                                                              multiplier:0.0
+    //                                                                constant:29];
+    //    [cell.contentView addConstraint:centerX];
+    //
+    
+    
+    
     
     // Get count
     ALAssetsGroup *g = (ALAssetsGroup*)[self.assetGroups objectAtIndex:indexPath.row];
@@ -115,7 +155,7 @@
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     return cell;
-
+    
 }
 
 - (UIImage *)resize:(UIImage *)image to:(CGSize)newSize {
@@ -138,32 +178,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if ([segue.identifier isEqualToString:@"Display Photo List"]) {
-//        if ([sender isKindOfClass:[UITableViewCell class]]) {
-//            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-//            if (indexPath) {
-//                if ([segue.destinationViewController isKindOfClass:[PhotoTableViewController class]]) {
-//                    PhotoTableViewController *ptvc = segue.destinationViewController;
-//                    ptvc.assetGroup = [self.assetGroups objectAtIndex:indexPath.row];
-//                    [ptvc.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-//                    ptvc.columns = 4;
-//                }
-//            }
-//            
-//        }
-//    }
-    
     if ([segue.identifier isEqualToString:@"Display Photo List"]) {
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
             if (indexPath) {
                 if ([segue.destinationViewController isKindOfClass:[PhotoCollectionViewController class]]) {
+                    self.pickIndexPath = indexPath;
                     PhotoCollectionViewController *photoCollectionViewController = segue.destinationViewController;
                     photoCollectionViewController.assetGroup = [self.assetGroups objectAtIndex:indexPath.row];
                     [photoCollectionViewController.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
                     photoCollectionViewController.title = [photoCollectionViewController.assetGroup valueForProperty:ALAssetsGroupPropertyName];
                     photoCollectionViewController.selectionDelegate = self;
-                    photoCollectionViewController.maximaCount = self.maximaCount;
+                    photoCollectionViewController.selectedPhotos = [self.selectedPhotosAll valueForKey:[photoCollectionViewController.assetGroup valueForProperty:ALAssetsGroupPropertyPersistentID]];
                 }
             }
         }
@@ -179,22 +205,66 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(BOOL)shouldSelect:(PhotoVo *)photos WithCounts:(NSUInteger)count
+-(BOOL)AddToSelectedPhotosAll:(PhotoVo *)photos WithIndex:(NSString*)index
 {
-    if (count < self.maximaCount) {
-        NSLog(@"-(BOOL)shouldSelect:(PhotoVo *)photos WithCounts:(NSUInteger)count YES");
+    NSMutableArray *indexSelectedPhotos = [self.selectedPhotosAll valueForKey:index];
+    if (indexSelectedPhotos) {
+        [indexSelectedPhotos addObject:photos];
         return YES;
-    }else{
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"最多選擇%ld張", nil), self.maximaCount];
-        NSString *message = nil;//[NSString stringWithFormat:NSLocalizedString(@"最多選擇%ld張", nil), self.maximaCount];
-        [[[UIAlertView alloc] initWithTitle:title
-                                    message:message
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:NSLocalizedString(@"好", nil), nil] show];
-        NSLog(@"-(BOOL)shouldSelect:(PhotoVo *)photos WithCounts:(NSUInteger)count NO");
-        return NO;
     }
+    return NO;
+}
+
+-(BOOL)shouldSelect:(PhotoVo *)photos WithCounts:(NSInteger)count
+{
+    BOOL returnVal = NO;
+    if (self.pickIndexPath) {
+        NSInteger counts = 0;
+        for (NSString *key in self.selectedPhotosAll) {
+            NSMutableArray *val = [self.selectedPhotosAll objectForKey:key];
+            counts = counts + val.count;
+        }
+        
+        if (counts < self.maximaCount) {
+            NSString *index = [[self.assetGroups objectAtIndex:self.pickIndexPath.row] valueForProperty:ALAssetsGroupPropertyPersistentID];
+            returnVal = [self AddToSelectedPhotosAll:photos WithIndex:index];
+            
+            AlbumTableViewCell *cell = (AlbumTableViewCell*)[self.tableView cellForRowAtIndexPath:self.pickIndexPath];
+            cell.selectedCount.text = [[NSString alloc]initWithFormat:@"%ld",[[self.selectedPhotosAll objectForKey:index]count]];
+            
+            return returnVal;
+        }else{
+            NSString *title = [NSString stringWithFormat:NSLocalizedString(@"最多選擇%ld張", nil), self.maximaCount];
+            NSString *message = nil;
+            [[[UIAlertView alloc] initWithTitle:title
+                                        message:message
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:NSLocalizedString(@"好", nil), nil] show];
+        }
+    }
+    return returnVal;
+}
+
+-(BOOL)DeleteToSelectedPhotosAll:(PhotoVo *)photos WithIndex:(NSString*)index
+{
+    NSMutableArray *indexSelectedPhotos = [self.selectedPhotosAll valueForKey:index];
+    if (indexSelectedPhotos) {
+        [indexSelectedPhotos removeObject:photos];
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)shouldDeSelect:(PhotoVo *)photos WithCounts:(NSInteger)count
+{
+    if (self.pickIndexPath) {
+        AlbumTableViewCell *cell = (AlbumTableViewCell*)[self.tableView cellForRowAtIndexPath:self.pickIndexPath];
+        cell.selectedCount.text = [[NSString alloc]initWithFormat:@"%ld",count -1];
+        
+        return [self DeleteToSelectedPhotosAll:photos WithIndex:[[self.assetGroups objectAtIndex:self.pickIndexPath.row] valueForProperty:ALAssetsGroupPropertyPersistentID]];
+    }
+    return NO;
 }
 
 @end

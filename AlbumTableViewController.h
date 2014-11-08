@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSMutableArray *assetGroups;
 @property (nonatomic, weak) id <SelectionDelegate> selectionDelegate;
 @property (nonatomic) NSInteger maximaCount;
+@property (nonatomic, strong) NSMutableDictionary *selectedPhotosAll;
 @end
