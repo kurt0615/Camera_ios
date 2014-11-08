@@ -91,6 +91,7 @@
         PhotoVo *photoVo  = [[PhotoVo alloc] initWithPhoto:result Selected:selected];
         photoVo.PhotoVoDelegate = self;
         
+        //add selected photo to selection list
         if (selected) {
             [self.selectedPhotos addObject:photoVo];
         }

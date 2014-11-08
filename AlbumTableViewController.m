@@ -40,10 +40,6 @@
 {
     if (!_selectedPhotosAll) {
         _selectedPhotosAll = [[NSMutableDictionary alloc] init];
-        
-        //        for (ALAssetsGroup *group in self.assetGroups) {
-        //            [_selectedPhotosAll setObject:[[NSMutableArray alloc]init] forKey:[group valueForProperty:ALAssetsGroupPropertyName]];
-        //        }
     }
     return _selectedPhotosAll;
 }
