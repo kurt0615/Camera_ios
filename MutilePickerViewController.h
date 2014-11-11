@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SelectionDelegate.h"
+#import "AlbumTableViewController.h"
 
-@interface MutilePickerViewController : UIViewController <SelectionDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
+@interface MutilePickerViewController : UIViewController <UINavigationControllerDelegate,UIScrollViewDelegate,AlbumDelegate>
 
 @end

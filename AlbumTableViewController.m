@@ -195,8 +195,8 @@
 #pragma SelectionDelegate impl.
 -(void)didSelected:(NSMutableArray *)photos
 {
-    if ([self.selectionDelegate respondsToSelector:@selector(didSelected:)]) {
-        [self.selectionDelegate didSelected:photos];
+    if ([self.albumDelegate respondsToSelector:@selector(didFinishWithPhotos:)]) {
+        [self.albumDelegate didFinishWithPhotos:self.selectedPhotosAll];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SelectionDelegate.h"
 
+@protocol AlbumDelegate <NSObject>
+-(void)didFinishWithPhotos:(NSMutableDictionary*)selectedPhotosAll;
+@end
+
 @interface AlbumTableViewController : UITableViewController <SelectionDelegate>
 @property (nonatomic, strong) NSMutableArray *assetGroups;
-@property (nonatomic, weak) id <SelectionDelegate> selectionDelegate;
+@property (nonatomic, weak) id <AlbumDelegate> albumDelegate;
 @property (nonatomic) NSInteger maximaCount;
 @property (nonatomic, strong) NSMutableDictionary *selectedPhotosAll;
 @end

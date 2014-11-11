@@ -23,12 +23,6 @@
     self.maximaCount = 5;
 }
 
-//- (IBAction)GoToPhoto:(id)sender {
-//    PhotoPickerRoot *photoPickerRoot = [[PhotoPickerRoot alloc] init];
-//
-//    [self presentViewController:photoPickerRoot animated:YES completion:nil];
-//}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"Display Album List"]) {
@@ -36,31 +30,40 @@
             UINavigationController *uiNavigationController = segue.destinationViewController;
             if ([[uiNavigationController visibleViewController] isKindOfClass:[AlbumTableViewController class]]) {
                 AlbumTableViewController *albumTableViewController = (AlbumTableViewController*)[uiNavigationController visibleViewController];
-                albumTableViewController.selectionDelegate = self;
+                albumTableViewController.albumDelegate = self;
                 albumTableViewController.title = @"選擇相簿";
                 albumTableViewController.maximaCount = self.maximaCount;
             }
         }
     }
 }
--(void)didSelected:(NSMutableArray *)photos
+
+
+-(void)didFinishWithPhotos:(NSMutableDictionary *)selectedPhotosAll
 {
-    NSLog(@"@Photo Counts : %ld",photos.count);
+    CGRect workingFrame = self.view.frame;
+
     
-    self.maximaCount = self.maximaCount - photos.count;
-    
-    CGRect workingFrame = CGRectMake(100, 100, 768, 700);;
-    for (PhotoVo *v in photos) {
-        UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:v.photo.thumbnail]];
-        [imageview setContentMode:UIViewContentModeScaleAspectFit];
-        imageview.frame = workingFrame;
-        [self.scrollView addSubview:imageview];
-        workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+    NSInteger counts = 0;
+    for (NSString *key in selectedPhotosAll) {
+        NSMutableArray *val = [selectedPhotosAll objectForKey:key];
+        counts = counts + val.count;
+        
+        for (PhotoVo *v in val) {
+            UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:v.photo.thumbnail]];
+            [imageview setContentMode:UIViewContentModeScaleAspectFit];
+            imageview.frame = workingFrame;
+            [self.scrollView addSubview:imageview];
+            workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+        }
     }
+    NSLog(@"@Photo Counts : %ld",counts);
+    
+    
+    
     
     [self.scrollView setPagingEnabled:YES];
-    [self.scrollView setContentSize:CGSizeMake(2200, 1090)];
-
+    [self.scrollView setContentSize:self.view.frame.size];
 }
 
 @end
