@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 Kurt Yang. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -16,8 +17,10 @@
 @end
 
 @interface PhotoVo : NSObject
-@property (nonatomic, strong) ALAsset *photo;
+@property (nonatomic, strong) ALAsset *photoALAsset;
 @property (nonatomic, assign) BOOL selected;
+@property (nonatomic, strong) NSURL *photoUrl;
+@property (nonatomic, strong) UIImage *thumbnail;
 @property (nonatomic, weak) id<PhotoVoDelegate> photoVoDelegate;
 -(instancetype)initWithPhoto:(ALAsset *)photo Selected:(BOOL)select;
 @end

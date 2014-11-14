@@ -11,5 +11,5 @@
 
 @interface MutilePickerCollectionViewCell : UICollectionViewCell
 @property id act;
-- (void)setAssets:(UIImage *)photo;
+- (void)setAssets:(PhotoVo *)photoVo;
 @end

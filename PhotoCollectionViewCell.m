@@ -42,7 +42,7 @@
     }
     
     
-    self.photoView = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:self.photoVo.photo.thumbnail]];
+    self.photoView = [[UIImageView alloc] initWithImage:self.photoVo.thumbnail];
     [self.photoView setContentMode:UIViewContentModeScaleAspectFit];
     CGRect frame = self.photoView.frame;
     frame.size = self.frame.size;

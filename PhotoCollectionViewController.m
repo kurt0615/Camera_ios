@@ -78,9 +78,20 @@
         
         BOOL selected = NO;
         
+//        if (self.selectedPhotos) {
+//            for (PhotoVo *obj in self.selectedPhotos) {
+//                if ([[[[obj.photo defaultRepresentation]url] absoluteString]
+//                     isEqualToString:[[[result defaultRepresentation]url] absoluteString]]) {
+//                    selected = YES;
+//                    [self.selectedPhotos removeObject:obj];
+//                    break;
+//                }
+//            }
+//        }
+        
         if (self.selectedPhotos) {
             for (PhotoVo *obj in self.selectedPhotos) {
-                if ([[[[obj.photo defaultRepresentation]url] absoluteString]
+                if ([[obj.photoUrl absoluteString]
                      isEqualToString:[[[result defaultRepresentation]url] absoluteString]]) {
                     selected = YES;
                     [self.selectedPhotos removeObject:obj];
@@ -88,6 +99,7 @@
                 }
             }
         }
+
         
         PhotoVo *photoVo  = [[PhotoVo alloc] initWithPhoto:result Selected:selected];
         photoVo.PhotoVoDelegate = self;

@@ -21,9 +21,9 @@
     }
 }
 
-- (void)setAssets:(UIImage *)photo
+- (void)setAssets:(PhotoVo *)photoVo;
 {
-    _photo = photo;
+    _photo = photoVo.thumbnail;
     
     if (self.photoView) {
         [self.photoView removeFromSuperview];

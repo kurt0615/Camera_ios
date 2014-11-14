@@ -1,0 +1,51 @@
+
+/* Class = "IBUIButton"; normalTitle = "Select Photo"; ObjectID = "06e-0U-XnO"; */
+"06e-0U-XnO.normalTitle" = "Select Photo";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "0Gq-0j-FYY"; */
+"0Gq-0j-FYY.text" = "Label";
+
+/* Class = "IBUIButton"; normalTitle = "Take Photo"; ObjectID = "4T1-EH-7Xf"; */
+"4T1-EH-7Xf.normalTitle" = "Take Photo";
+
+/* Class = "IBUILabel"; text = "count"; ObjectID = "BuO-Os-NGb"; */
+"BuO-Os-NGb.text" = "count";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Gzx-5t-o8j"; */
+"Gzx-5t-o8j.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "JRM-tA-sIp"; */
+"JRM-tA-sIp.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "LLd-xd-PI9"; */
+"LLd-xd-PI9.text" = "Label";
+
+/* Class = "IBUILabel"; text = "/"; ObjectID = "LqR-ia-8wt"; */
+"LqR-ia-8wt.text" = "/";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Rbs-pO-L7b"; */
+"Rbs-pO-L7b.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "aHg-Cm-byX"; */
+"aHg-Cm-byX.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "cKh-wW-GJi"; */
+"cKh-wW-GJi.text" = "Label";
+
+/* Class = "IBUILabel"; text = "/"; ObjectID = "dbp-eu-qyp"; */
+"dbp-eu-qyp.text" = "/";
+
+/* Class = "IBUILabel"; text = "/"; ObjectID = "ek0-kZ-Wbq"; */
+"ek0-kZ-Wbq.text" = "/";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "jQP-4O-qOa"; */
+"jQP-4O-qOa.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "q5Q-8h-iBP"; */
+"q5Q-8h-iBP.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "rfn-aX-nmL"; */
+"rfn-aX-nmL.text" = "Label";
+
+/* Class = "IBUILabel"; text = "/"; ObjectID = "tvG-Ab-uec"; */
+"tvG-Ab-uec.text" = "/";

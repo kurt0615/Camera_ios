@@ -17,13 +17,19 @@
 @property (nonatomic) NSInteger maximaCount;
 @property (weak, nonatomic) IBOutlet UICollectionView *imageContainer;
 @property (strong, nonatomic) UIButton *addPhotoBtn;
-@property (strong, nonatomic) NSMutableArray *dataSource;
+@property (strong, nonatomic) NSMutableArray *thumbnailDataSource;
 @property (weak, nonatomic) IBOutlet UIButton *addPhoto;
+@property (strong, nonatomic) NSURL *reTakePhoto;
 @end
 
 @implementation MutilePickerViewController
 
+
+#define MAXIMA_SELECTED_COUNT 4
+
 - (IBAction)addPhotoAction:(id)sender {
+    self.reTakePhoto = nil;
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
                                                             delegate:self
                                                    cancelButtonTitle:@"取消"
@@ -57,6 +63,11 @@
         AlbumTableViewController *albumTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"Album"];
         albumTableViewController.albumDelegate = self;
         albumTableViewController.title = @"選擇相簿";
+        if (self.reTakePhoto) {
+            self.maximaCount = 1;
+        }else{
+            [self resetMaximaCount];
+        }
         albumTableViewController.maximaCount = self.maximaCount;
         [self.navigationController pushViewController: albumTableViewController animated:YES];
     }
@@ -64,7 +75,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.maximaCount = 4;
+    self.maximaCount = MAXIMA_SELECTED_COUNT;
     self.imageContainer.delegate = self;
     self.imageContainer.dataSource = self;
     
@@ -73,28 +84,71 @@
                                        self.addPhoto.frame.size.width, self.addPhoto.frame.size.height)];
 }
 
+#pragma AlbumDelegate impl
 -(void)didFinishWithPhotos:(NSMutableDictionary *)selectedPhotosAll
 {
     for (NSString *key in selectedPhotosAll) {
         NSMutableArray *val = [selectedPhotosAll objectForKey:key];
         for (PhotoVo *photoVo in val) {
-            UIImage *thumbnailImage = [UIImage imageWithCGImage:photoVo.photo.thumbnail];
-            [self.dataSource addObject:thumbnailImage];
+             if (self.reTakePhoto) {
+                  [self replacePhotoWith:photoVo];
+             }else{
+                 [self.thumbnailDataSource addObject:photoVo];
+             }
         }
     }
     
-    [self.imageContainer setFrame:CGRectMake(self.imageContainer.frame.origin.x,self.imageContainer.frame.origin.y, self.dataSource.count*75, 75)];
+    [self resetMaximaCount];
+    [self resizeImageContainer];
+    [self.imageContainer reloadData];
+}
+
+-(void)didFinishWithPhoto:(ALAsset *)photo
+{
+    PhotoVo *photoVo = [[PhotoVo alloc] initWithPhoto:photo Selected:YES];
+    
+    if (self.reTakePhoto) {
+        [self replacePhotoWith:photoVo];
+    }else{
+        [self.thumbnailDataSource addObject:photoVo];
+        [self resetMaximaCount];
+        [self resizeImageContainer];
+    }
+    [self.imageContainer reloadData];
+}
+
+-(void)resizeImageContainer
+{
+    [self.imageContainer setFrame:CGRectMake(self.imageContainer.frame.origin.x,self.imageContainer.frame.origin.y, self.thumbnailDataSource.count*75, 75)];
     [self.addPhoto setFrame:CGRectMake(self.imageContainer.frame.size.width, self.imageContainer.frame.origin.y,
                                        self.addPhoto.frame.size.width, self.addPhoto.frame.size.height)];
-    
-    [self.addPhoto setHidden:(self.dataSource.count >= self.maximaCount)];
-    
-    [self.imageContainer reloadData];
+    [self.addPhoto setHidden:(self.thumbnailDataSource.count >= MAXIMA_SELECTED_COUNT)];
+}
+
+-(void)replacePhotoWith:(PhotoVo*)newPhoto
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"photoUrl == %@", self.reTakePhoto];
+    NSArray *filteredArray = [self.thumbnailDataSource filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count > 0) {
+        [self.thumbnailDataSource replaceObjectAtIndex:[self.thumbnailDataSource indexOfObject:filteredArray[0]] withObject:newPhoto];
+    }
+    self.maximaCount = 4;
+}
+
+-(void)resetMaximaCount
+{
+    self.maximaCount = MAXIMA_SELECTED_COUNT - self.thumbnailDataSource.count;
+}
+
+-(UIImage*)getComparessPhotoWithScale:(float)scale WithPhoto:(PhotoVo*)photo
+{
+    return [UIImage imageWithData:UIImageJPEGRepresentation([UIImage imageWithCGImage:[[photo.photoALAsset defaultRepresentation] fullResolutionImage]],scale)];
 }
 
 #pragma UIImagePickerControllerDelegate impl
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = [info valueForKeyPath:UIImagePickerControllerOriginalImage];
+    
     if(chosenImage){
         //save to PhotoAlbum
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -104,8 +158,7 @@
                                   ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc]init];
                                   [assetslibrary assetForURL:assetURL
                                                  resultBlock:^(ALAsset *asset){
-                                                     [self.dataSource addObject:[UIImage imageWithCGImage:asset.thumbnail]];
-                                                     [self didFinishWithPhotos:nil];
+                                                     [self didFinishWithPhoto:asset];
                                                  }
                                                 failureBlock:nil];
                                   
@@ -114,61 +167,38 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-
-#pragma Ref:www.nickkuh.com/iphone/how-to-create-square-thumbnails-using-iphone-sdk-cg-quartz-2d/2010/03/
-- (UIImage *)thumbWithSideOfLength:(float)length :(UIImage*)mainImage {
-    UIImage *thumbnail;
-    //couldn’t find a previously created thumb image so create one first…
-    UIImageView *mainImageView = [[UIImageView alloc] initWithImage:mainImage];
-    
-    BOOL widthGreaterThanHeight = (mainImage.size.width > mainImage.size.height);
-    float sideFull = (widthGreaterThanHeight) ? mainImage.size.height : mainImage.size.width;
-    
-    CGRect clippedRect = CGRectMake(0, 0, sideFull, sideFull);
-    
-    //creating a square context the size of the final image which we will then
-    // manipulate and transform before drawing in the original image
-    UIGraphicsBeginImageContext(CGSizeMake(length, length));
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
-    
-    CGContextClipToRect( currentContext, clippedRect);
-    
-    CGFloat scaleFactor = length/sideFull;
-    
-    if (widthGreaterThanHeight) {
-        //a landscape image – make context shift the original image to the left when drawn into the context
-        CGContextTranslateCTM(currentContext, -((mainImage.size.width - sideFull) / 2) * scaleFactor, 0);
-    }
-    else {
-        //a portfolio image – make context shift the original image upwards when drawn into the context
-        CGContextTranslateCTM(currentContext, 0, -((mainImage.size.height - sideFull) / 2) * scaleFactor);
-    }
-    //this will automatically scale any CGImage down/up to the required thumbnail side (length) when the CGImage gets drawn into the context on the next line of code
-    CGContextScaleCTM(currentContext, scaleFactor, scaleFactor);
-    [mainImageView.layer renderInContext:currentContext];
-    thumbnail = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    NSData *imageData = UIImagePNGRepresentation(thumbnail);
-    
-    return [UIImage imageWithData:imageData];
-}
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+//{
+//    self.reTakePhoto = nil;
+//    [picker dismissViewControllerAnimated:YES completion:NULL];
+//}
 
 #pragma CollectionViewDelegate impl
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.dataSource.count;
+    return self.thumbnailDataSource.count;
 }
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MutilePickerCollectionViewCell * mutilePickerCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    [mutilePickerCollectionViewCell setAssets:[self.dataSource objectAtIndex:indexPath.row]];
-    
-    //__weak ViewController *weakViewController = self;
-    __weak MutilePickerCollectionViewCell *weakMutilePickerCollectionViewCell = mutilePickerCollectionViewCell;
+    [mutilePickerCollectionViewCell setAssets:[self.thumbnailDataSource objectAtIndex:indexPath.row]];
     
     mutilePickerCollectionViewCell.act = ^{
+        //self.reTakePhoto = [[(PhotoVo*)[self.thumbnailDataSource objectAtIndex:indexPath.row] photoUrl]absoluteString];
+        self.reTakePhoto = [(PhotoVo*)[self.thumbnailDataSource objectAtIndex:indexPath.row] photoUrl];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:nil
+                                                                delegate:self
+                                                       cancelButtonTitle:@"取消"
+                                                  destructiveButtonTitle:nil
+                                                       otherButtonTitles:nil];
         
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [actionSheet addButtonWithTitle:@"照相"];
+        }
+        
+        [actionSheet addButtonWithTitle:@"選擇相片"];
+        [actionSheet showInView:self.view];
     };
     
     return mutilePickerCollectionViewCell;
@@ -180,12 +210,17 @@
 }
 
 //Getter
--(NSMutableArray *)dataSource{
-    if (!_dataSource) {
-        _dataSource = [[NSMutableArray alloc]init];
+-(NSMutableArray *)thumbnailDataSource{
+    if (!_thumbnailDataSource) {
+        _thumbnailDataSource = [[NSMutableArray alloc]init];
     }
-    return _dataSource;
+    return _thumbnailDataSource;
 }
+
+
+
+
+
 
 
 @end

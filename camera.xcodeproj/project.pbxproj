@@ -69,6 +69,7 @@
 		459C54421A1350C6001B987E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = camera/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		459C54461A14A18A001B987E /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		459C54471A14A18A001B987E /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		459C54491A15E6AA001B987E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "camera/zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		45DCBABF1A08AA8900C52D91 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		45DCBAC11A08AA9000C52D91 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		45DCBAC31A08AA9600C52D91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -169,8 +170,6 @@
 				45DCBADC1A0A0FA300C52D91 /* PhotoCollectionViewController.m */,
 				45DCBAD81A0A0F6600C52D91 /* PhotoCollectionViewCell.h */,
 				45DCBAD91A0A0F6600C52D91 /* PhotoCollectionViewCell.m */,
-				45DCBAE11A0A388300C52D91 /* PhotoVo.h */,
-				45DCBAE21A0A388300C52D91 /* PhotoVo.m */,
 			);
 			name = Album;
 			sourceTree = "<group>";
@@ -187,6 +186,8 @@
 		45DCBAB31A08A88C00C52D91 /* cameraMutil */ = {
 			isa = PBXGroup;
 			children = (
+				45DCBAE11A0A388300C52D91 /* PhotoVo.h */,
+				45DCBAE21A0A388300C52D91 /* PhotoVo.m */,
 				45DCBAC91A08AADD00C52D91 /* MutilePickerViewController.h */,
 				45DCBACA1A08AADD00C52D91 /* MutilePickerViewController.m */,
 				459C543E1A133D7C001B987E /* MutilePickerCollectionViewCell.h */,
@@ -347,7 +348,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 			);
 			mainGroup = 45EEC6C319D10FF5000E910C;
@@ -432,6 +432,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				459C54421A1350C6001B987E /* Base */,
+				459C54491A15E6AA001B987E /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

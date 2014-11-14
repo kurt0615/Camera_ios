@@ -16,12 +16,13 @@
 {
     self = [super init];
     if (self) {
-        _photo = photo;
+        _photoALAsset = photo;
         _selected = select;
+        _thumbnail = [[UIImage alloc]initWithCGImage:photo.thumbnail];
+        _photoUrl = photo.defaultRepresentation.url;
     }
     return self;
 }
-
 
 -(void)setSelected:(BOOL)selected
 {
