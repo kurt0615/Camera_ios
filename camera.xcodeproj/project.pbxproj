@@ -15,6 +15,9 @@
 		452836621A07585000C387A6 /* AutoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 452836611A07585000C387A6 /* AutoViewController.m */; };
 		4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4581CB2819D274DB00A8E2DA /* OverView.xib */; };
 		4595C6991A0C9AD6004E1353 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4595C6981A0C9AD6004E1353 /* AlbumTableViewCell.m */; };
+		459C54401A133D7C001B987E /* MutilePickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 459C543F1A133D7C001B987E /* MutilePickerCollectionViewCell.m */; };
+		459C54431A1350C6001B987E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 459C54411A1350C6001B987E /* Main.storyboard */; };
+		459C54481A14A18A001B987E /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459C54471A14A18A001B987E /* CameraViewController.m */; };
 		45DCBAC01A08AA8900C52D91 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBABF1A08AA8900C52D91 /* MobileCoreServices.framework */; };
 		45DCBAC21A08AA9000C52D91 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBAC11A08AA9000C52D91 /* AssetsLibrary.framework */; };
 		45DCBAC41A08AA9600C52D91 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DCBAC31A08AA9600C52D91 /* CoreGraphics.framework */; };
@@ -31,7 +34,6 @@
 		45EEC6D219D10FF5000E910C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D119D10FF5000E910C /* main.m */; };
 		45EEC6D519D10FF5000E910C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D419D10FF5000E910C /* AppDelegate.m */; };
 		45EEC6D819D10FF5000E910C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6D719D10FF5000E910C /* ViewController.m */; };
-		45EEC6DB19D10FF5000E910C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45EEC6D919D10FF5000E910C /* Main.storyboard */; };
 		45EEC6DD19D10FF5000E910C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EEC6DC19D10FF5000E910C /* Images.xcassets */; };
 		45EEC6EC19D10FF5000E910C /* cameraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EEC6EB19D10FF5000E910C /* cameraTests.m */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,11 @@
 		4581CB2819D274DB00A8E2DA /* OverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverView.xib; sourceTree = "<group>"; };
 		4595C6971A0C9AD6004E1353 /* AlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumTableViewCell.h; sourceTree = "<group>"; };
 		4595C6981A0C9AD6004E1353 /* AlbumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumTableViewCell.m; sourceTree = "<group>"; };
+		459C543E1A133D7C001B987E /* MutilePickerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutilePickerCollectionViewCell.h; sourceTree = "<group>"; };
+		459C543F1A133D7C001B987E /* MutilePickerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MutilePickerCollectionViewCell.m; sourceTree = "<group>"; };
+		459C54421A1350C6001B987E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = camera/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		459C54461A14A18A001B987E /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		459C54471A14A18A001B987E /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		45DCBABF1A08AA8900C52D91 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		45DCBAC11A08AA9000C52D91 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		45DCBAC31A08AA9600C52D91 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -90,13 +97,10 @@
 		45EEC6D419D10FF5000E910C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		45EEC6D619D10FF5000E910C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		45EEC6D719D10FF5000E910C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		45EEC6DA19D10FF5000E910C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45EEC6DC19D10FF5000E910C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		45EEC6E519D10FF5000E910C /* cameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45EEC6EA19D10FF5000E910C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45EEC6EB19D10FF5000E910C /* cameraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cameraTests.m; sourceTree = "<group>"; };
-		45EEC70019D150F3000E910C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
-		45EEC70219D151FE000E910C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,12 +157,10 @@
 			name = autolayout;
 			sourceTree = "<group>";
 		};
-		45DCBAB31A08A88C00C52D91 /* cameraMutil */ = {
+		459C54441A148E66001B987E /* Album */ = {
 			isa = PBXGroup;
 			children = (
 				451F22FB1A0B44CA009F3F8E /* SelectionDelegate.h */,
-				45DCBAC91A08AADD00C52D91 /* MutilePickerViewController.h */,
-				45DCBACA1A08AADD00C52D91 /* MutilePickerViewController.m */,
 				45DCBACC1A08B7B400C52D91 /* AlbumTableViewController.h */,
 				45DCBACD1A08B7B400C52D91 /* AlbumTableViewController.m */,
 				4595C6971A0C9AD6004E1353 /* AlbumTableViewCell.h */,
@@ -169,6 +171,28 @@
 				45DCBAD91A0A0F6600C52D91 /* PhotoCollectionViewCell.m */,
 				45DCBAE11A0A388300C52D91 /* PhotoVo.h */,
 				45DCBAE21A0A388300C52D91 /* PhotoVo.m */,
+			);
+			name = Album;
+			sourceTree = "<group>";
+		};
+		459C54451A148E9B001B987E /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				459C54461A14A18A001B987E /* CameraViewController.h */,
+				459C54471A14A18A001B987E /* CameraViewController.m */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
+		45DCBAB31A08A88C00C52D91 /* cameraMutil */ = {
+			isa = PBXGroup;
+			children = (
+				45DCBAC91A08AADD00C52D91 /* MutilePickerViewController.h */,
+				45DCBACA1A08AADD00C52D91 /* MutilePickerViewController.m */,
+				459C543E1A133D7C001B987E /* MutilePickerCollectionViewCell.h */,
+				459C543F1A133D7C001B987E /* MutilePickerCollectionViewCell.m */,
+				459C54451A148E9B001B987E /* Camera */,
+				459C54441A148E66001B987E /* Album */,
 				451F22FC1A0B8518009F3F8E /* backup */,
 			);
 			name = cameraMutil;
@@ -189,8 +213,8 @@
 		45EEC6C319D10FF5000E910C = {
 			isa = PBXGroup;
 			children = (
+				459C54411A1350C6001B987E /* Main.storyboard */,
 				45DCBABE1A08AA3900C52D91 /* Frameworks */,
-				45EEC6D919D10FF5000E910C /* Main.storyboard */,
 				45DCBAB31A08A88C00C52D91 /* cameraMutil */,
 				4528365F1A07583A00C387A6 /* autolayout */,
 				45EEC6CF19D10FF5000E910C /* Supporting Files */,
@@ -344,8 +368,8 @@
 			files = (
 				4581CB2919D274DB00A8E2DA /* OverView.xib in Resources */,
 				4501E74019FF45970011325A /* ScaleableView.xib in Resources */,
-				45EEC6DB19D10FF5000E910C /* Main.storyboard in Resources */,
 				45EEC6DD19D10FF5000E910C /* Images.xcassets in Resources */,
+				459C54431A1350C6001B987E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +387,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				459C54401A133D7C001B987E /* MutilePickerCollectionViewCell.m in Sources */,
+				459C54481A14A18A001B987E /* CameraViewController.m in Sources */,
 				4501E73E19FE3D660011325A /* AlertView.m in Sources */,
 				4501E7441A022F380011325A /* DownloadViewController.m in Sources */,
 				45DCBAD71A09FD3B00C52D91 /* PhotoTableViewCell.m in Sources */,
@@ -402,15 +428,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		45EEC6D919D10FF5000E910C /* Main.storyboard */ = {
+		459C54411A1350C6001B987E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				45EEC6DA19D10FF5000E910C /* Base */,
-				45EEC70019D150F3000E910C /* zh-Hant */,
-				45EEC70219D151FE000E910C /* zh-Hans */,
+				459C54421A1350C6001B987E /* Base */,
 			);
 			name = Main.storyboard;
-			path = camera;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

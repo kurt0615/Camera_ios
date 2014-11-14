@@ -10,4 +10,11 @@
 
 @implementation AlbumTableViewCell
 
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    CGRect frame = self.selectedCount.frame;
+    frame.origin.x = self.contentView.frame.size.width - 45;
+    [self.selectedCount setFrame:frame];
+}
 @end

@@ -48,8 +48,8 @@
     [super viewDidLoad];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelImagePicker)];
-    [self.navigationItem setRightBarButtonItem:cancelButton];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+    [self.navigationItem setRightBarButtonItem:doneButtonItem];
     
     // Load Albums into assetGroups
     dispatch_async(dispatch_get_main_queue(), ^
@@ -146,10 +146,10 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
     UIImage* image = [UIImage imageWithCGImage:[g posterImage]];
-    image = [self resize:image to:CGSizeMake(78, 78)];
+    image = [self resize:image to:CGSizeMake(75, 75)];
     [cell.imageView setImage:image];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    
+    cell.selectedCount.hidden = YES;
     return cell;
     
 }
@@ -167,9 +167,17 @@
     [self.tableView reloadData];
 }
 
--(void)cancelImagePicker
+-(void)completeSelection
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.albumDelegate respondsToSelector:@selector(didFinishWithPhotos:)]) {
+        [self.albumDelegate didFinishWithPhotos:self.selectedPhotosAll];
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)doneAction:(id)sender
+{
+    [self completeSelection];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -192,13 +200,28 @@
     }
 }
 
-#pragma SelectionDelegate impl.
--(void)didSelected:(NSMutableArray *)photos
+-(NSInteger)getSelectedTotalCount
 {
-    if ([self.albumDelegate respondsToSelector:@selector(didFinishWithPhotos:)]) {
-        [self.albumDelegate didFinishWithPhotos:self.selectedPhotosAll];
+    NSInteger count = 0;
+    for (NSString *key in self.selectedPhotosAll) {
+        NSMutableArray *val = [self.selectedPhotosAll objectForKey:key];
+        count = count + val.count;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    return count;
+}
+
+-(void)updateAlbumCellSelectedCountWithCount:(NSInteger)count
+{
+    AlbumTableViewCell *cell = (AlbumTableViewCell*)[self.tableView cellForRowAtIndexPath:self.pickIndexPath];
+    cell.selectedCount.text = [[NSString alloc]initWithFormat:@"%ld",count];
+    
+    cell.selectedCount.hidden = !(count > 0);
+}
+
+#pragma SelectionDelegate impl.
+-(void)didSelected
+{
+    [self completeSelection];
 }
 
 -(BOOL)AddToSelectedPhotosAll:(PhotoVo *)photos WithIndex:(NSString*)index
@@ -206,6 +229,7 @@
     NSMutableArray *indexSelectedPhotos = [self.selectedPhotosAll valueForKey:index];
     if (indexSelectedPhotos) {
         [indexSelectedPhotos addObject:photos];
+        [self updateAlbumCellSelectedCountWithCount:[indexSelectedPhotos count]];
         return YES;
     }
     return NO;
@@ -215,19 +239,10 @@
 {
     BOOL returnVal = NO;
     if (self.pickIndexPath) {
-        NSInteger counts = 0;
-        for (NSString *key in self.selectedPhotosAll) {
-            NSMutableArray *val = [self.selectedPhotosAll objectForKey:key];
-            counts = counts + val.count;
-        }
         
-        if (counts < self.maximaCount) {
+        if ([self getSelectedTotalCount] < self.maximaCount) {
             NSString *index = [[self.assetGroups objectAtIndex:self.pickIndexPath.row] valueForProperty:ALAssetsGroupPropertyPersistentID];
             returnVal = [self AddToSelectedPhotosAll:photos WithIndex:index];
-            
-            AlbumTableViewCell *cell = (AlbumTableViewCell*)[self.tableView cellForRowAtIndexPath:self.pickIndexPath];
-            cell.selectedCount.text = [[NSString alloc]initWithFormat:@"%ld",[[self.selectedPhotosAll objectForKey:index]count]];
-            
             return returnVal;
         }else{
             NSString *title = [NSString stringWithFormat:NSLocalizedString(@"最多選擇%ld張", nil), self.maximaCount];
@@ -247,6 +262,7 @@
     NSMutableArray *indexSelectedPhotos = [self.selectedPhotosAll valueForKey:index];
     if (indexSelectedPhotos) {
         [indexSelectedPhotos removeObject:photos];
+        [self updateAlbumCellSelectedCountWithCount:[indexSelectedPhotos count]];
         return YES;
     }
     return NO;

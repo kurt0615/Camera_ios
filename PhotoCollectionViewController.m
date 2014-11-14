@@ -46,8 +46,8 @@
 
 -(void)doneAction:(id)sender
 {
-    if ([self.selectionDelegate respondsToSelector:@selector(didSelected:)]) {
-        [self.selectionDelegate didSelected:self.selectedPhotos];
+    if ([self.selectionDelegate respondsToSelector:@selector(didSelected)]) {
+        [self.selectionDelegate didSelected];
     }
 }
 
@@ -62,6 +62,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    
     [cell setAssets:[self.photos objectAtIndex:indexPath.row]];
     return cell;
 }

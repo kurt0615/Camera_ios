@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AlbumTableViewController.h"
 
-@interface MutilePickerViewController : UIViewController <UINavigationControllerDelegate,UIScrollViewDelegate,AlbumDelegate>
+@interface MutilePickerViewController : UIViewController <UIScrollViewDelegate,AlbumDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIActionSheetDelegate>
 
 @end
