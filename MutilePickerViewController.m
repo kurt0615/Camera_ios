@@ -24,7 +24,6 @@
 
 @implementation MutilePickerViewController
 
-
 #define MAXIMA_SELECTED_COUNT 4
 
 - (IBAction)addPhotoAction:(id)sender {
@@ -66,7 +65,7 @@
         if (self.reTakePhoto) {
             self.maximaCount = 1;
         }else{
-            [self resetMaximaCount];
+            self.maximaCount = [self gettMaximaCount];
         }
         albumTableViewController.maximaCount = self.maximaCount;
         [self.navigationController pushViewController: albumTableViewController animated:YES];
@@ -75,7 +74,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.maximaCount = MAXIMA_SELECTED_COUNT;
+    
     self.imageContainer.delegate = self;
     self.imageContainer.dataSource = self;
     
@@ -98,7 +97,7 @@
         }
     }
     
-    [self resetMaximaCount];
+    //[self resetMaximaCount];
     [self resizeImageContainer];
     [self.imageContainer reloadData];
 }
@@ -111,7 +110,7 @@
         [self replacePhotoWith:photoVo];
     }else{
         [self.thumbnailDataSource addObject:photoVo];
-        [self resetMaximaCount];
+        //[self resetMaximaCount];
         [self resizeImageContainer];
     }
     [self.imageContainer reloadData];
@@ -135,9 +134,9 @@
     self.maximaCount = 4;
 }
 
--(void)resetMaximaCount
+-(NSInteger)gettMaximaCount
 {
-    self.maximaCount = MAXIMA_SELECTED_COUNT - self.thumbnailDataSource.count;
+    return (MAXIMA_SELECTED_COUNT - self.thumbnailDataSource.count);
 }
 
 -(UIImage*)getComparessPhotoWithScale:(float)scale WithPhoto:(PhotoVo*)photo
